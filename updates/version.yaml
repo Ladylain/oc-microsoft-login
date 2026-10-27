@@ -1,0 +1,3 @@
+v1.0.0:
+    - Première version, connexion au back-office avec un compte Microsoft (Entra ID).
+    - create_identities_table.php

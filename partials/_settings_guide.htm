@@ -1,0 +1,46 @@
+<?php
+    $redirectUri = \Ladylain\MicrosoftLogin\Models\Settings::redirectUri();
+    $mailerAvailable = \Ladylain\MicrosoftLogin\Models\Settings::mailerSettings() !== null;
+?>
+<div class="callout callout-info">
+    <div class="content">
+        <h4><?= e(__('ladylain.microsoftlogin::lang.guide.title')) ?></h4>
+        <ol>
+            <li><?= __('ladylain.microsoftlogin::lang.guide.step_register') ?></li>
+            <li>
+                <?= __('ladylain.microsoftlogin::lang.guide.step_redirect') ?><br>
+                <code id="microsoftlogin-redirect-uri"><?= e($redirectUri) ?></code>
+            </li>
+            <li><?= __('ladylain.microsoftlogin::lang.guide.step_credentials') ?></li>
+            <li><?= __('ladylain.microsoftlogin::lang.guide.step_accounts') ?></li>
+        </ol>
+        <p>
+            <?php if ($mailerAvailable): ?>
+                <button
+                    type="button"
+                    class="btn btn-default"
+                    data-request="onMicrosoftLoginImportMailer"
+                    data-request-confirm="<?= e(__('ladylain.microsoftlogin::lang.import.confirm')) ?>">
+                    <?= e(__('ladylain.microsoftlogin::lang.import.button')) ?>
+                </button>
+            <?php endif ?>
+            <button
+                type="button"
+                class="btn btn-default"
+                data-request="onMicrosoftLoginRegister"
+                data-request-loading=".microsoftlogin-test-loading">
+                <?= e(__('ladylain.microsoftlogin::lang.register.button')) ?>
+            </button>
+            <button
+                type="button"
+                class="btn btn-default"
+                data-request="onMicrosoftLoginTest"
+                data-request-loading=".microsoftlogin-test-loading">
+                <?= e(__('ladylain.microsoftlogin::lang.guide.test_button')) ?>
+            </button>
+            <span class="microsoftlogin-test-loading" style="display:none"><?= e(__('ladylain.microsoftlogin::lang.guide.testing')) ?></span>
+            <br><small><?= e(__('ladylain.microsoftlogin::lang.guide.test_hint')) ?></small>
+            <br><small><?= e(__('ladylain.microsoftlogin::lang.register.hint')) ?></small>
+        </p>
+    </div>
+</div>

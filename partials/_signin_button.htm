@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="<?= Url::asset('plugins/ladylain/microsoftlogin/assets/css/signin.css') ?>?v=<?= filemtime(__DIR__.'/../assets/css/signin.css') ?>">
+<div class="microsoftlogin">
+    <div class="microsoftlogin-separator"><span><?= e(__('ladylain.microsoftlogin::lang.signin.or')) ?></span></div>
+    <a class="microsoftlogin-button" href="<?= Backend::url('ladylain/microsoftlogin/sso/start') ?>">
+        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 21 21">
+            <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+            <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+            <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+            <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+        </svg>
+        <span><?= e($label) ?></span>
+    </a>
+</div>

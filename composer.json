@@ -1,0 +1,34 @@
+{
+    "name": "ladylain/oc-microsoft-login",
+    "type": "october-plugin",
+    "description": "Sign in to the October CMS backend with a company Microsoft account (Entra ID, OpenID Connect + PKCE)",
+    "keywords": [
+        "october",
+        "octobercms",
+        "plugin",
+        "microsoft",
+        "entra",
+        "azure",
+        "sso",
+        "oidc",
+        "login"
+    ],
+    "homepage": "https://github.com/Ladylain/oc-microsoft-login",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ladylain"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Ladylain/oc-microsoft-login/issues"
+    },
+    "require": {
+        "php": "^8.2",
+        "composer/installers": "~1.0|~2.0",
+        "firebase/php-jwt": "^6.11"
+    },
+    "extra": {
+        "installer-name": "microsoftlogin"
+    }
+}

@@ -1,0 +1,65 @@
+fields:
+    _guide:
+        type: partial
+        path: $/ladylain/microsoftlogin/partials/_settings_guide.htm
+
+    enabled:
+        label: ladylain.microsoftlogin::lang.settings.enabled
+        comment: ladylain.microsoftlogin::lang.settings.enabled_comment
+        type: switch
+
+    _app_section:
+        label: ladylain.microsoftlogin::lang.settings.app_section
+        type: section
+
+    tenant_id:
+        label: ladylain.microsoftlogin::lang.settings.tenant_id
+        comment: ladylain.microsoftlogin::lang.settings.tenant_id_comment
+        span: left
+
+    client_id:
+        label: ladylain.microsoftlogin::lang.settings.client_id
+        comment: ladylain.microsoftlogin::lang.settings.client_id_comment
+        span: right
+
+    auth_method:
+        label: ladylain.microsoftlogin::lang.settings.auth_method
+        type: radio
+        span: full
+
+    client_secret:
+        label: ladylain.microsoftlogin::lang.settings.client_secret
+        comment: ladylain.microsoftlogin::lang.settings.client_secret_comment
+        type: sensitive
+        span: left
+        trigger:
+            action: show
+            field: auth_method
+            condition: value[secret]
+
+    cert_path:
+        label: ladylain.microsoftlogin::lang.settings.cert_path
+        comment: ladylain.microsoftlogin::lang.settings.cert_path_comment
+        span: left
+        trigger:
+            action: show
+            field: auth_method
+            condition: value[certificate]
+
+    cert_pub_path:
+        label: ladylain.microsoftlogin::lang.settings.cert_pub_path
+        comment: ladylain.microsoftlogin::lang.settings.cert_pub_path_comment
+        span: right
+        trigger:
+            action: show
+            field: auth_method
+            condition: value[certificate]
+
+    _display_section:
+        label: ladylain.microsoftlogin::lang.settings.display_section
+        type: section
+
+    button_label:
+        label: ladylain.microsoftlogin::lang.settings.button_label
+        comment: ladylain.microsoftlogin::lang.settings.button_label_comment
+        span: left

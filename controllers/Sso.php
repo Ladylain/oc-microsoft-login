@@ -45,6 +45,8 @@ class Sso extends Controller
                 'nonce' => Str::random(40),
                 'verifier' => OidcClient::generateVerifier(),
                 'expires' => time() + self::FLOW_TTL,
+                // case « Rester connecté » de la page de connexion, transmise par le bouton (partials/_signin_button.htm)
+                'remember' => (bool) get('remember'),
             ];
 
             $url = $this->client()->authorizationUrl($flow['state'], $flow['nonce'], $flow['verifier'], Settings::redirectUri());
@@ -85,7 +87,7 @@ class Sso extends Controller
 
             [$user, $identity] = (new UserResolver)->resolve($claims);
 
-            $this->signIn($user, $identity);
+            $this->signIn($user, $identity, (bool) ($flow['remember'] ?? false));
         }
         catch (SsoException $ex) {
             return $this->fail($ex);
@@ -98,7 +100,7 @@ class Sso extends Controller
      * signIn applique les mêmes garde-fous que la connexion par mot de passe :
      * compte activé, non suspendu ni banni, journal d'accès.
      */
-    protected function signIn(BackendUser $user, Identity $identity): void
+    protected function signIn(BackendUser $user, Identity $identity, bool $remember = false): void
     {
         if (!$user->is_activated) {
             throw new SsoException(__('ladylain.microsoftlogin::lang.errors.not_activated'));
@@ -111,7 +113,9 @@ class Sso extends Controller
             throw new SsoException(__('ladylain.microsoftlogin::lang.errors.suspended'), $ex->getMessage());
         }
 
-        BackendAuth::login($user, (bool) Config::get('backend.force_remember', false));
+        // Même règle que la connexion par mot de passe : backend.force_remember impose, sinon la case « Rester connecté »
+        $force = Config::get('backend.force_remember');
+        BackendAuth::login($user, $force === null ? $remember : (bool) $force);
 
         $identity->last_login_at = now();
         $identity->save();

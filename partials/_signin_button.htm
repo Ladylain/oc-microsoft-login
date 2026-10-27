@@ -11,3 +11,10 @@
         <span><?= e($label) ?></span>
     </a>
 </div>
+<script>
+    // « Rester connecté » coché dans le formulaire : transmis à la connexion Microsoft (controllers/Sso.php)
+    document.querySelector('.microsoftlogin-button').addEventListener('click', function () {
+        var box = document.querySelector('input[type="checkbox"][name="remember"]');
+        if (box && box.checked) this.href = this.href.split('?')[0] + '?remember=1';
+    });
+</script>

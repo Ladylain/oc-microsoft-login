@@ -1,5 +1,6 @@
 <?php namespace Ladylain\MicrosoftLogin\Tests\Unit;
 
+use Config;
 use Db;
 use Backend;
 use BackendAuth;
@@ -135,9 +136,9 @@ class SignInTest extends PluginTestCase
 
     // --- Parcours complet ---------------------------------------------------------
 
-    protected function startFlow(): array
+    protected function startFlow(string $suffix = ''): array
     {
-        $response = $this->get(Backend::url('ladylain/microsoftlogin/sso/start'));
+        $response = $this->get(Backend::url('ladylain/microsoftlogin/sso/start') . $suffix);
         $response->assertRedirect();
         parse_str(parse_url($response->headers->get('Location'), PHP_URL_QUERY), $query);
         $this->nonce = $query['nonce'];
@@ -164,6 +165,23 @@ class SignInTest extends PluginTestCase
         $this->assertNotNull($identity->last_login_at);
         $this->assertSame($this->tenant, $identity->tenant_id);
         $this->assertNull(session(Sso::SESSION_KEY), 'l\'état de la demande ne sert qu\'une fois');
+    }
+
+    public function testRememberFollowsSignInCheckbox()
+    {
+        $this->makeUser('jane', 'jane.doe@example.com');
+        $this->configureSettings();
+        $this->fakeMicrosoft();
+        Config::set('backend.force_remember', null);
+
+        $query = $this->startFlow();
+        $this->get(Backend::url('ladylain/microsoftlogin/sso/callback') . '?' . http_build_query(['code' => 'abc', 'state' => $query['state']]))
+            ->assertCookieMissing('admin_auth');
+        BackendAuth::logout();
+
+        $query = $this->startFlow('?remember=1');
+        $this->get(Backend::url('ladylain/microsoftlogin/sso/callback') . '?' . http_build_query(['code' => 'abc', 'state' => $query['state']]))
+            ->assertCookie('admin_auth');
     }
 
     public function testCallbackWithWrongStateIsRefused()

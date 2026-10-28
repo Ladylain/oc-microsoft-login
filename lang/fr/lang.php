@@ -77,7 +77,6 @@
         'ambiguous' => 'Plusieurs comptes back-office correspondent à :email. Un administrateur doit corriger les adresses en double.',
         'linked_elsewhere' => 'Le compte back-office :email est déjà lié à un autre compte Microsoft. Contactez un administrateur.',
         'account_removed' => 'Le compte back-office lié à ce compte Microsoft a été supprimé.',
-        'not_activated' => 'Votre compte back-office n\'est pas activé.',
         'suspended' => 'Votre compte back-office est temporairement suspendu ou bloqué.',
         'generic' => 'Microsoft a refusé la connexion (code :code). Contactez l\'administrateur.',
     ],

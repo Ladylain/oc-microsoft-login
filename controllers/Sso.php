@@ -98,14 +98,12 @@ class Sso extends Controller
 
     /**
      * signIn applique les mêmes garde-fous que la connexion par mot de passe :
-     * compte activé, non suspendu ni banni, journal d'accès.
+     * compte non suspendu ni banni, journal d'accès. Comme elle, n'exige pas
+     * is_activated : October ne le passe à vrai qu'à la première connexion, un
+     * compte créé par un administrateur et jamais utilisé serait sinon refusé.
      */
     protected function signIn(BackendUser $user, Identity $identity, bool $remember = false): void
     {
-        if (!$user->is_activated) {
-            throw new SsoException(__('ladylain.microsoftlogin::lang.errors.not_activated'));
-        }
-
         try {
             BackendAuth::findThrottleByUserId($user->getKey(), Request::ip())->check();
         }

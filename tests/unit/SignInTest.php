@@ -213,20 +213,24 @@ class SignInTest extends PluginTestCase
         $this->assertFalse(BackendAuth::check());
     }
 
-    public function testSuspendedAndInactiveAccountsCannotSignIn()
+    public function testNeverActivatedAccountCanSignIn()
     {
+        // Compte créé par un administrateur, jamais connecté : October le laisse à is_activated = 0
         $user = $this->makeUser('jane', 'jane.doe@example.com', ['is_activated' => false]);
         $this->configureSettings();
         $this->fakeMicrosoft();
 
         $query = $this->startFlow();
-        $this->get(Backend::url('ladylain/microsoftlogin/sso/callback') . '?' . http_build_query(['code' => 'abc', 'state' => $query['state']]))
-            ->assertRedirect(Backend::url('backend/auth/signin'));
-        $this->assertFalse(BackendAuth::check());
-        $this->assertFalse(Identity::where('user_id', $user->id)->exists());
+        $this->get(Backend::url('ladylain/microsoftlogin/sso/callback') . '?' . http_build_query(['code' => 'abc', 'state' => $query['state']]));
+        $this->assertTrue(BackendAuth::check());
+        $this->assertSame($user->id, BackendAuth::getUser()->id);
+    }
 
-        $user->is_activated = true;
-        $user->save();
+    public function testSuspendedAccountCannotSignIn()
+    {
+        $user = $this->makeUser('jane', 'jane.doe@example.com');
+        $this->configureSettings();
+        $this->fakeMicrosoft();
         BackendAuth::findThrottleByUserId($user->id, '127.0.0.1')->ban();
 
         $query = $this->startFlow();

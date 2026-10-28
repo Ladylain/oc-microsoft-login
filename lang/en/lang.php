@@ -77,7 +77,6 @@
         'ambiguous' => 'Several backend accounts match :email. An administrator must fix the duplicate addresses.',
         'linked_elsewhere' => 'Backend account :email is already linked to another Microsoft account. Contact an administrator.',
         'account_removed' => 'The backend account linked to this Microsoft account has been deleted.',
-        'not_activated' => 'Your backend account is not activated.',
         'suspended' => 'Your backend account is temporarily suspended or banned.',
         'generic' => 'Microsoft refused the sign-in (code :code). Contact the administrator.',
     ],

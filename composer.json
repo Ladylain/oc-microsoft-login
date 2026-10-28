@@ -1,5 +1,5 @@
 {
-    "name": "ladylain/oc-microsoft-login",
+    "name": "ladylain/oc-microsoftlogin-plugin",
     "type": "october-plugin",
     "description": "Sign in to the October CMS backend with a company Microsoft account (Entra ID, OpenID Connect + PKCE)",
     "keywords": [

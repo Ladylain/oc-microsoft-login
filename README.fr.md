@@ -13,9 +13,10 @@ avec les comptes Microsoft 365 de l'entreprise (Entra ID).
 ## Installation
 
 ```bash
-git clone https://github.com/Ladylain/oc-microsoft-login.git plugins/ladylain/microsoftlogin
-php artisan october:migrate
+php artisan plugin:install Ladylain.MicrosoftLogin --from=https://github.com/Ladylain/oc-microsoft-login.git --oc --want=dev-main
 ```
+
+Mises à jour : `php artisan october:update` (ou `composer update ladylain/oc-microsoftlogin-plugin`).
 
 PHP 8.2+ et `firebase/php-jwt` ^6.11 (déjà présente si Office365Mailer est installé, sinon `composer require firebase/php-jwt`).
 
